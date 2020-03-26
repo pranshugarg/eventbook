@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import { Grid, Button } from 'semantic-ui-react'
 import EventList from '../EventList/EventList'
 import EventForm from '../EventForm/EventForm'
+import cuid from 'cuid';
 
-const eventsDashboard = [
+const eventsFromDashboard = [
   {
     id: '1',
     title: 'Trip to Tower of London',
@@ -56,39 +57,37 @@ const eventsDashboard = [
 
 
 class EventDashboard extends Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      events: eventsDashboard,
-      isOpen: false
-    }
-
-    this.handleCancel = this.handleCancel.bind(this);
+  state = {
+    events: eventsFromDashboard,
+    isOpen: false
   }
 
-  handleFormOpen = () => {
-    this.setState({
-      isOpen: true
-    })
+  handleIsOpenToggle = () => {
+    this.setState( ({isOpen}) => ({
+      isOpen: !isOpen
+    }))
   }
 
-  handleCancel() {
-    this.setState({
+  handleCreateEvent = (newEvent) => {
+    newEvent.id = cuid();
+    newEvent.hostPhotoURL = 'assets/user.png';
+    this.setState( ({events}) =>  ({
+      events: [...events, newEvent],
       isOpen: false
-    })
+    }))
   }
 
   render() {
+    const {events, isOpen} = this.state;
     return (
       <Grid>
         <Grid.Column width={10}>
-            <EventList events={this.state.events}/>
+            <EventList events={events}/>
         </Grid.Column>
         <Grid.Column width={6}>
-            <Button onClick={this.handleFormOpen} positive content='Create Event'/>
-            {this.state.isOpen && 
-            <EventForm handleCancel={this.handleCancel}/>}
+            <Button onClick={this.handleIsOpenToggle} positive content='Create Event'/>
+            {isOpen && 
+            <EventForm createEvent={this.handleCreateEvent} cancelFormOpen={this.handleIsOpenToggle}/>}
         </Grid.Column>
       </Grid>
     )
