@@ -10,9 +10,26 @@ class EventForm extends Component {
       hostedBy: ''
   };
 
+  // life cycl methods
+  
+  //populate the form(update state in eventform) based on selected event(props received)
+  //re-render 
+  componentDidMount(){
+    if(this.props.selectedEvent !== null){
+      this.setState({
+        ...this.props.selectedEvent
+      })
+    }
+  }
+
   onFormSubmit = evt => {
     evt.preventDefault();
-    this.props.createEvent(this.state);
+    if(this.state.id){
+      this.props.updateEvent(this.state);
+    }
+    else{
+     this.props.createEvent(this.state);
+    }
   };
 
   onInputChange = ( {target :{name, value}}  ) => {
