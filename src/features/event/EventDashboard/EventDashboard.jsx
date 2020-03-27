@@ -3,79 +3,33 @@ import { Grid, Button } from 'semantic-ui-react'
 import EventList from '../EventList/EventList'
 import EventForm from '../EventForm/EventForm'
 import cuid from 'cuid';
-
-const eventsFromDashboard = [
-  {
-    id: '1',
-    title: 'Trip to Tower of London',
-    date: '2018-03-27',
-    category: 'culture',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sollicitudin ligula eu leo tincidunt, quis scelerisque magna dapibus. Sed eget ipsum vel arcu vehicula ullamcorper.',
-    city: 'London, UK',
-    venue: "Tower of London, St Katharine's & Wapping, London",
-    hostedBy: 'Bob',
-    hostPhotoURL: 'https://randomuser.me/api/portraits/men/20.jpg',
-    attendees: [
-      {
-        id: 'a',
-        name: 'Bob',
-        photoURL: 'https://randomuser.me/api/portraits/men/20.jpg'
-      },
-      {
-        id: 'b',
-        name: 'Tom',
-        photoURL: 'https://randomuser.me/api/portraits/men/22.jpg'
-      }
-    ]
-  },
-  {
-    id: '2',
-    title: 'Trip to Punch and Judy Pub',
-    date: '2018-03-28',
-    category: 'drinks',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sollicitudin ligula eu leo tincidunt, quis scelerisque magna dapibus. Sed eget ipsum vel arcu vehicula ullamcorper.',
-    city: 'London, UK',
-    venue: 'Punch & Judy, Henrietta Street, London, UK',
-    hostedBy: 'Tom',
-    hostPhotoURL: 'https://randomuser.me/api/portraits/men/22.jpg',
-    attendees: [
-      {
-        id: 'b',
-        name: 'Tom',
-        photoURL: 'https://randomuser.me/api/portraits/men/22.jpg'
-      },
-      {
-        id: 'a',
-        name: 'Bob',
-        photoURL: 'https://randomuser.me/api/portraits/men/20.jpg'
-      }
-    ]
-  }
-]
+import { connect } from 'react-redux';
+import { deleteEvent, createEvent, updateEvent } from '../eventActions'
 
 
+//map state to props
+const mapState = state => ({
+  events: state.events
+});
+
+//action would be dispatched to reducer
+const actions = {
+  deleteEvent, createEvent, updateEvent
+}
+
+//events(from local component state) moved to eventReducer(initialState)
 class EventDashboard extends Component {
   state = {
-    events: eventsFromDashboard,
+    //events: eventsFromDashboard,  
     isOpen: false,
     selectedEvent: null
   }
 
-  /*
-  handleIsOpenToggle = () => {
-    this.setState( ({isOpen}) => ({
-      isOpen: !isOpen,
-      selectedEvent: null
-    }))
-  }*/
-
   handleCreateEvent = (newEvent) => {
     newEvent.id = cuid();
     newEvent.hostPhotoURL = 'assets/user.png';
+    this.props.createEvent(newEvent);
     this.setState( ({events}) =>  ({
-      events: [...events, newEvent],
       isOpen: false
     }))
   }
@@ -87,25 +41,17 @@ class EventDashboard extends Component {
     })
   }
 
-  handleUpdateEvent = (updatedEvent) => { //from form   //without object restructuring
-    this.setState( ({events}) => ({                   //this.setState({
-        events: events.map(event => {                 //events: this.state.events.map(event => {
-          if (event.id === updatedEvent.id) { 
-            return { ...updatedEvent}                //return Object.assign({}, updatedEvent)
-          } else {
-            return event
-          }
-        }),
+  handleUpdateEvent = (updatedEvent) => { 
+    this.props.updateEvent(updatedEvent);
+    this.setState( ({events}) => ({
       isOpen: false,
       selectedEvent: null
     }))
   }
 
-  handleDeleteEvent = (eventId) => {
-    this.setState( ({events}) =>({
-      events: events.filter(e => e.id !== eventId)
-    }))
-  }
+  handleDeleteEvent = eventId => () => {
+    this.props.deleteEvent(eventId);
+  };
 
   handleCreateFormOpen =  () => {
     this.setState({
@@ -122,6 +68,7 @@ class EventDashboard extends Component {
 
   render() {
     const {events, selectedEvent, isOpen} = this.state;
+    const {events} = this.props;
     return (
       <Grid>
         <Grid.Column width={10}>
@@ -142,4 +89,5 @@ class EventDashboard extends Component {
   }
 }
 
-export default EventDashboard
+// connect is an higher order component 
+export default connect(mapState, actions)(EventDashboard);

@@ -22,7 +22,7 @@ class App extends Component {
             <NavBar />
             <Container className="main">
               <Switch>
-              <Route path="/events" component={EventDashboard} />
+              <Route exact path="/events" component={EventDashboard} />
               <Route path="/test" component={TestComponent} />
               <Route path="/event/:id" component={EventDetailedPage} />
               <Route path="/people" component={PeopleDashboard} />
