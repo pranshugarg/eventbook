@@ -9,6 +9,7 @@ import UserDetailedPage from '../../features/user/UserDetailed/UserDetailedPage'
 import SettingsDashboard from '../../features/Settings/SettingsDashboard';
 import EventForm from '../../features/event/EventForm/EventForm';
 import NavBar from '../../features/nav/NavBar/NavBar';
+import TestComponent from '../../features/testarea/TestComponent';
 
 class App extends Component {
   render() {
@@ -20,12 +21,15 @@ class App extends Component {
           <Fragment>
             <NavBar />
             <Container className="main">
+              <Switch>
               <Route path="/events" component={EventDashboard} />
+              <Route path="/test" component={TestComponent} />
               <Route path="/event/:id" component={EventDetailedPage} />
               <Route path="/people" component={PeopleDashboard} />
               <Route path="/profile/:id" component={UserDetailedPage} />
               <Route path="/settings" component={SettingsDashboard} />
               <Route path="/createEvent" component={EventForm} />
+              </Switch>
             </Container>
           </Fragment>
         )} />
