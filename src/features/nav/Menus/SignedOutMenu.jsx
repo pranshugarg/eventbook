@@ -1,6 +1,7 @@
 import React from 'react';
 import { Menu, Button } from 'semantic-ui-react';
 
+//stateless functional component
 const SignedOutMenu = ({signIn}) => {
   return (
     <Menu.Item position="right">
