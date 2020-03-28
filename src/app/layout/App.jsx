@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { Container } from 'semantic-ui-react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, withRouter } from 'react-router-dom';
 import HomePage from '../../features/home/HomePage';
 import EventDashboard from '../../features/event/EventDashboard/EventDashboard';
 import EventDetailedPage from '../../features/event/EventDetailed/EventDetailedPage';
@@ -21,14 +21,14 @@ class App extends Component {
           <Fragment>
             <NavBar />
             <Container className="main">
-              <Switch>
+              <Switch key ={this.props.location.key} >
               <Route exact path="/events" component={EventDashboard} />
               <Route path="/test" component={TestComponent} />
               <Route path="/event/:id" component={EventDetailedPage} />
               <Route path="/people" component={PeopleDashboard} />
               <Route path="/profile/:id" component={UserDetailedPage} />
               <Route path="/settings" component={SettingsDashboard} />
-              <Route path="/createEvent" component={EventForm} />
+              <Route path={["/createEvent", "/manage/:id" ]} component={EventForm} /> 
               </Switch>
             </Container>
           </Fragment>
@@ -39,4 +39,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withRouter( App);
