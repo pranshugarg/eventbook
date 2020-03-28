@@ -49,7 +49,7 @@ class EventDashboard extends Component {
     }))
   }
 
-  handleDeleteEvent = eventId => () => {
+  handleDeleteEvent = eventId => {
     this.props.deleteEvent(eventId);
   };
 
@@ -67,7 +67,7 @@ class EventDashboard extends Component {
   }
 
   render() {
-    const {events, selectedEvent, isOpen} = this.state;
+    const { selectedEvent, isOpen} = this.state;
     const {events} = this.props;
     return (
       <Grid>
