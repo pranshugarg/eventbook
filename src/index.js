@@ -8,9 +8,12 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { configureStore } from './app/store/configureStore';
 import ScrollToTop from './app/common/util/ScrollToTop';
+import { loadEvents } from './features/event/eventActions'
 
 const store = configureStore();
 
+//store gives the ability to dispatch actions from th store itself
+store.dispatch( loadEvents() )
 const rootEl = document.getElementById('root');
 
 let render = () => {

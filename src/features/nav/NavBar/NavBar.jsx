@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component,  Fragment } from 'react';
 import { Menu, Container, Button } from 'semantic-ui-react';
 import { NavLink, Link, withRouter } from 'react-router-dom';
 import SignedOutMenu from '../Menus/SignedOutMenu';
@@ -41,14 +41,20 @@ class NavBar extends Component {
             <img src="assets/logo.png" alt="logo" />
             eventbook
           </Menu.Item>
+    
           <Menu.Item as={NavLink} exact to="/events" name="Events" />
-          <Menu.Item as={NavLink} to="/people" name="People" />
-          <Menu.Item>
-            <Button as={Link} to="/createEvent" floated="right" positive inverted content="Create Event" />
-          </Menu.Item>
-
-          <Menu.Item as={NavLink} to="/test" name="Test" />
           
+           {authenticated &&
+            <Fragment>
+              <Menu.Item as={NavLink} to="/people" name="People" />
+              <Menu.Item>
+                <Button as={Link} to="/createEvent" floated="right" positive inverted content="Create Event" />
+              </Menu.Item>
+
+              <Menu.Item as={NavLink} to="/test" name="Test" />
+            </Fragment>
+          }
+
           {authenticated ? <SignedInMenu signOut = {this.handleSignOut} currentUser={auth.currentUser} /> 
                          : <SignedOutMenu signIn={this.handleSignIn} register={this.handleRegister} />}
           

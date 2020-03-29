@@ -1,33 +1,35 @@
 import React, { Component } from 'react'
 import { Button } from 'semantic-ui-react'
 import { connect } from 'react-redux'
-import { incrementCounter, decrementCounter } from './testActions'
+import { incrementAsync, decrementAsync,  } from './testActions'
 import { openModal, closeModal } from '../modals/modalActions'
 
 //map state to prop function. 
 //get state from store..
 //data is prop
 const mapState = (state) => ({
-  data: state.test.data  //specify test reducer
+  data: state.test.data , //specify test reducer
+  loading : state.async.loading, //true before action is finished
+  buttonName : state.async.elementName 
 })
 
 
 //map dispatch(action) to props
 const actions = {
-  incrementCounter,
-  decrementCounter,
+  incrementAsync,
+  decrementAsync,
   openModal
 }
 
 class TestComponent extends Component {
   render() {
-    const {incrementCounter, decrementCounter, data, openModal } = this.props;
+    const {incrementAsync, decrementAsync, data, openModal, loading,  buttonName } = this.props;
     return (
       <div>
         <h1>Test Area</h1>
         <h3>The answer is: {data}</h3>
-        <Button onClick={incrementCounter} color='green' content='Increment'/>
-        <Button onClick={decrementCounter} color='red' content='Decrement'/>
+        <Button name="increment" loading={ buttonName==='increment' && loading} onClick={ (e) => incrementAsync(e.target.name) } color='green' content='Increment'/>
+        <Button name="decrement" loading={ buttonName==='decrement' && loading} onClick={ (e) => decrementAsync(e.target.name)} color='red' content='Decrement'/>
         <Button onClick={() => openModal('TestModal', {data: 34})} color="teal" content="Open Modal" />
       </div>
     )
