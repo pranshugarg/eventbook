@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { createEvent, updateEvent } from '../eventActions'
 import cuid from 'cuid';
 import { reduxForm, Field } from 'redux-form'; //reduxForm is high order component
-import { composeValidators, combineValidators, isRequired, hasLengthGreaterThan } from 'revalidate';
+import { createValidator, composeValidators, combineValidators, isRequired, hasLengthGreaterThan } from 'revalidate';
 import TextInput from '../../../app/common/form/TextInput';
 import TextArea from '../../../app/common/form/TextArea';
 import SelectInput from '../../../app/common/form/SelectInput';
