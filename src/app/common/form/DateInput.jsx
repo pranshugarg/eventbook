@@ -2,7 +2,6 @@ import React from 'react'
 import { Form, Label } from 'semantic-ui-react';
 import 'react-datepicker/dist/react-datepicker.css';
 import DatePicker from 'react-datepicker';
-import moment from 'moment';
 
 const DateInput = ({input, width, placeholder, meta: {touched, error}, ...rest}) => {
   return (

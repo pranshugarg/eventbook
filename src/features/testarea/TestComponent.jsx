@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Button } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { incrementAsync, decrementAsync,  } from './testActions'
-import { openModal, closeModal } from '../modals/modalActions'
+import { openModal } from '../modals/modalActions'
 
 //map state to prop function. 
 //get state from store..

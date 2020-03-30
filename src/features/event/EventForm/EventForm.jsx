@@ -4,13 +4,11 @@ import { connect } from 'react-redux';
 import { createEvent, updateEvent } from '../eventActions'
 import cuid from 'cuid';
 import { reduxForm, Field } from 'redux-form'; //reduxForm is high order component
-import { createValidator, composeValidators, combineValidators, isRequired, hasLengthGreaterThan } from 'revalidate';
+import {  composeValidators, combineValidators, isRequired, hasLengthGreaterThan } from 'revalidate';
 import TextInput from '../../../app/common/form/TextInput';
 import TextArea from '../../../app/common/form/TextArea';
 import SelectInput from '../../../app/common/form/SelectInput';
 import DateInput from '../../../app/common/form/DateInput';
-import moment from 'moment';
-import DatePicker from 'react-datepicker';
 
 //mapstate to props
 const mapState = (state, ownProps) => {
